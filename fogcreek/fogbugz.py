@@ -1,6 +1,7 @@
 import sys
 import urllib, urllib2
 from django.conf import settings
+from django.http import Http404
 
 class FogBugzMiddleware(object):
     """Report Django exceptions to FogBugz
@@ -11,6 +12,10 @@ class FogBugzMiddleware(object):
     set to send an email on error, it will continue to do so."""
     
     def process_exception(self, request, exception):
+        # Do not file 404 errors in FogBugz
+        if isinstance(exception, Http404):
+            return
+
         bug = {}
         bug["ScoutUserName"] = settings.FOGBUGZ_USERNAME
         bug["ScoutProject"] = settings.FOGBUGZ_PROJECT
