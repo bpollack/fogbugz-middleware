@@ -60,7 +60,7 @@ class FogBugzMiddleware(object):
             # Don't throw an exception within the error handler!  Bad!
             pass
 
-def _get_traceback(self, exc_info):
+def _get_traceback(exc_info):
     """Helper function to return the traceback as a string"""
     import traceback
     return '\n'.join(traceback.format_exception(*(exc_info or sys.exc_info())))
