@@ -46,7 +46,7 @@ class FogBugzMiddleware(object):
         bug["ScoutUserName"] = settings.FOGBUGZ_USERNAME
         bug["ScoutProject"] = settings.FOGBUGZ_PROJECT
         bug["ScoutArea"] = settings.FOGBUGZ_AREA
-        bug["Description"] = 'Error (%s IP): %s' % ((request.META.get('REMOTE_ADDR') in settings.INTERNAL_IPS and 'internal' or 'EXTERNAL'), request.path)
+        bug["Description"] = '%s error: %s at %s' % ((request.META.get('REMOTE_ADDR') in settings.INTERNAL_IPS and 'Internal' or 'External'), exception.__class__.__name__, request.path)
         
         try:
             request_repr = repr(request)
